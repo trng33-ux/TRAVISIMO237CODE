@@ -1,0 +1,132 @@
+namespace SpriteKind {
+    export const SocialMedia = SpriteKind.create()
+}
+function Start () {
+    game.setDialogFrame(img`
+        999999999999999999999999
+        9dddddddddddddddddddddd9
+        9d99999999999999999999d9
+        999999999999999999999999
+        b9bddb999999999999bddb9b
+        b9b99b999999999999b99b9b
+        b9bbbb999999999999bbbb9b
+        b9999999999999999999999b
+        b9999999999999999999999b
+        b9999999999999999999999b
+        b9999999999999999999999b
+        b9999999999999999999999b
+        b9999999999999999999999b
+        b9999999999999999999999b
+        b9999999999999999999999b
+        b9999999999999999999999b
+        b9999999999999999999999b
+        b9999999999999999999999b
+        b9bddb999999999999bddb9b
+        b9b99b999999999999b99b9b
+        b9bbbb999999999999bbbb9b
+        bb99999999999999999999bb
+        bbbbbbbbbbbbbbbbbbbbbbbb
+        bbbbbbbbbbbbbbbbbbbbbbbb
+        `)
+    game.setDialogCursor(assets.image`YouG0`)
+    game.showLongText("Welcome to the Digital Inspection Burea", DialogLayout.Full)
+    game.setDialogCursor(assets.image`YouG0`)
+    color.setPalette(
+    color.Arcade
+    )
+    game.setDialogFrame(img`
+        999999999999999999999999
+        9dddddddddddddddddddddd9
+        9d99999999999999999999d9
+        999999999999999999999999
+        b9bddb999999999999bddb9b
+        b9b99b999999999999b99b9b
+        b9bbbb999999999999bbbb9b
+        b9999999999999999999999b
+        b9999999999999999999999b
+        b9999999999999999999999b
+        b9999999999999999999999b
+        b9999999999999999999999b
+        b9999999999999999999999b
+        b9999999999999999999999b
+        b9999999999999999999999b
+        b9999999999999999999999b
+        b9999999999999999999999b
+        b9999999999999999999999b
+        b9bddb999999999999bddb9b
+        b9b99b999999999999b99b9b
+        b9bbbb999999999999bbbb9b
+        bb99999999999999999999bb
+        bbbbbbbbbbbbbbbbbbbbbbbb
+        bbbbbbbbbbbbbbbbbbbbbbbb
+        `)
+    game.showLongText("Are you ready to play?", DialogLayout.Full)
+    color.setPalette(
+    color.DIY
+    )
+    game.showLongText("Before we can play, you have to know what's coming. Answer these queestions correctly", DialogLayout.Full)
+    story.startCutscene(function () {
+        story.printCharacterText("Can your computer get a virus from playing too much video games?", "Intro")
+        story.showPlayerChoices("Yes", "No")
+        if (story.checkLastAnswer("Yes")) {
+            story.printCharacterText("Yes! Playing too much video games can lead to exposing your personal information. ")
+            story.printCharacterText("Well done! Now you are ready to start playing.")
+            story.printCharacterText("Press A to continue")
+            story.cancelAllCutscenes()
+        } else {
+            game.reset()
+        }
+    })
+}
+scene.onOverlapTile(SpriteKind.Player, assets.tile`Video`, function (sprite, location) {
+    story.startCutscene(function () {
+        story.printCharacterText("This video is saying Roblox has been hacked", "Shocking video")
+        story.showPlayerChoices("Believe", "Dont Believe")
+        if (story.checkLastAnswer("Believe")) {
+            You.x += -16
+            info.changeScoreBy(1)
+        } else {
+            You.x += -16
+            info.changeScoreBy(-1)
+        }
+    })
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.SocialMedia, function (sprite, otherSprite) {
+    story.setPagePauseLength(1000, 2000)
+    story.spriteSayText(Influencer, "Hey I've got a new product", 5, 10)
+    story.spriteSayText(Influencer, "It's Dihydrogen Monoxide", 5, 10)
+    story.spriteSayText(Influencer, "It's super fodd", 5, 10)
+    story.spriteSayText(Influencer, "Want to buy some", 5, 10)
+    story.showPlayerChoices("Sure", "Nah")
+    if (story.checkLastAnswer("Buy")) {
+        info.changeLifeBy(-1)
+        Influencer.setPosition(108, 53)
+        story.spriteSayText(You, ":(", 2, 5)
+    } else {
+        info.changeLifeBy(1)
+        story.spriteSayText(You, ";)", 1, 7)
+        sprites.destroy(Influencer, effects.coolRadial, 2000)
+        info.changeScoreBy(1)
+        color.setPalette(
+        color.originalPalette
+        )
+    }
+})
+let Influencer: Sprite = null
+let You: Sprite = null
+color.setPalette(
+color.Arcade
+)
+tiles.setCurrentTilemap(tilemap`levelblank`)
+You = sprites.create(assets.image`YouB`, SpriteKind.Player)
+You.setPosition(20, 23)
+scene.cameraFollowSprite(You)
+controller.moveSprite(You, 100, 100)
+Influencer = sprites.create(assets.image`Influencer2`, SpriteKind.SocialMedia)
+Influencer.follow(You, 10)
+Influencer.setPosition(108, 53)
+forever(function () {
+    if (info.life() == 4) {
+    	
+    }
+})
